@@ -13,7 +13,7 @@ import { createNewDocument } from '@/actions/actions'
         router.push(`/doc/${docId}`);
       });
     };
-  return <Button onClick={handleCreateNewDocument} disabled = {isPending}> {isPending ? "creating ...":" "}New document</Button>
+  return <Button onClick={handleCreateNewDocument} className='w-full m-2' disabled = {isPending}> {isPending ? "creating ...":" "}New document</Button>
 }
 
 export default NewdocumentButton
