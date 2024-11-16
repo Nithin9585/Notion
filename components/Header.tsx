@@ -11,7 +11,7 @@ function Header() {
         {`'s`} Space</h1>
       ) }
       <Breadcrumbs/>
-      {/*Breadcrumbs*/}
+      
       <div>
         <SignedOut>
             <SignInButton/>
