@@ -17,8 +17,9 @@ export async function POST(req: NextRequest) {
     },
   });
 
-  const usersInRoom =await adminDb.collectionGroup("rooms").where("userId","==",sessionClaims?.email).get();
-  const userInRoom = usersInRoom.docs.find((doc) => doc.id === room);
+  const usersInRoom =await adminDb?.collectionGroup("rooms").where("userId","==",sessionClaims?.email).get();
+
+  const userInRoom = usersInRoom?.docs.find((doc) => doc.id === room);
   
   if (userInRoom?.exists) {
     session.allow(room, session.FULL_ACCESS);
@@ -26,7 +27,6 @@ export async function POST(req: NextRequest) {
     console.log("your are authorised")
     return new Response( body,{ status });
   }else{
-
   return NextResponse.json({ message : "you are not in this room" },
     {status:403}
   );

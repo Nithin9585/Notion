@@ -1,13 +1,20 @@
-import { auth } from "@clerk/nextjs/server";
+'use client'
 import RoomProvider from "@/components/roomprovider";
-function DocLayout({params : {id},children,}:{
-  children : React.ReactNode;
-  params: {id:string};
-}) {
-  return<RoomProvider roomId={id}>
+import { usePathname } from "next/navigation";
+
+function DocLayout({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname();
+  const id = pathname?.split("/").pop();
+
+  if (!id) {
+    return <div>Error: Room ID is required to access this page.</div>;
+  }
+
+  return (
+    <RoomProvider roomId={id}>
       {children}
-    </RoomProvider>;
-  
+    </RoomProvider>
+  );
 }
 
-export default DocLayout
+export default DocLayout;

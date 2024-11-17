@@ -5,10 +5,17 @@ import { Input } from "./ui/input";
 import { FormEvent, useEffect, useState, useTransition } from "react";
 import { db } from "@/firebase";
 import { useDocumentData } from "react-firebase-hooks/firestore";
+import Editor from "./Editor";
+import useOwner from "@/lib/useOwner";
+import DeleteDocument from "./DeleteDocument";
+
+
 function Document({id}:{id:string}) {
     const [input,setinput] = useState("");
     const [isUpdating,startTransition] = useTransition(); 
 const [data,loading,error] = useDocumentData(doc(db,"documents",id))
+const isOwner = useOwner();
+// const isOwner = useOwner();
     useEffect(()=>{
         if(data){
             setinput(data.title);
@@ -27,7 +34,7 @@ const [data,loading,error] = useDocumentData(doc(db,"documents",id))
         }
     }
   return (
-    <div>
+    <div className="flex-1 h-full bg-white p-5">
         <div className="">
             <form onSubmit={updateTitle}>
                 {/* Update title... */}
@@ -39,9 +46,21 @@ const [data,loading,error] = useDocumentData(doc(db,"documents",id))
               <Button disabled={isUpdating} type="submit">
                 {isUpdating ? "Updating...":"Update"}
               </Button>
-              </div>
+              
 
                 {/* if  */}
+                {isOwner && (
+                  <>
+
+                  {/**  Invite User  */}
+                  {/**  Delete  document  */}
+
+                  <DeleteDocument/>
+                  
+                  </>
+                
+                ) }
+                </div>
                 {/* invite && is owner  */}
 
 
@@ -55,7 +74,7 @@ const [data,loading,error] = useDocumentData(doc(db,"documents",id))
 
 
       </div>
-      
+      <Editor/>
       {/*Collaborative editor */}
     </div>
   )
